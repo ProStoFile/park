@@ -9,31 +9,26 @@ $database = "park";
 // Create connection
 $connection = new mysqli($servername, $username, $password, $database);
 
-$discount_value = "";
-$receive_conditions = "";
-$is_cumulative = "";
+$job_title = "";
+$responsibilities = "";
+$work_experience = "";
 
 $errorMessage = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $discount_value = $_POST["discount_value"];
-    $receive_conditions = $_POST["receive_conditions"];
-    $is_cumulative = $_POST["is_cumulative"];
+    $job_title = $_POST["job_title"];
+    $responsibilities = $_POST["responsibilities"];
+    $work_experience = $_POST["work_experience"];
 
     do {
-        if (empty($discount_value) || empty($receive_conditions) || empty($is_cumulative)) {
+        if (empty($job_title) || empty($responsibilities) || empty($work_experience)) {
             $errorMessage = "Заполните все поля";
             break;
         }
 
-        if ($is_cumulative !== 'Да' && $is_cumulative !== 'Нет') {
-            $errorMessage = "Введите корректные данные ('Да' или 'Нет')";
-            break;
-        }
-
-        $sql = "INSERT INTO discounts (discount_value, receive_conditions, is_cumulative)" .
-            "VALUES ('$discount_value', '$receive_conditions', '$is_cumulative')";
+        $sql = "INSERT INTO jobs (job_title, responsibilities, work_experience)" .
+            "VALUES ('$job_title', '$responsibilities', '$work_experience')";
         $result = $connection->query($sql);
 
         if (!$result) {
@@ -42,9 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
 
-        $discount_value = "";
-        $receive_conditions = "";
-        $is_cumulative = "";
+        $job_title = "";
+        $responsibilities = "";
+        $work_experience = "";
 
         $successMessage = "Успешно добавлено";
 
@@ -84,23 +79,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <form method="post">
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Размер скидки</label>
+                <label class="col-sm-3 col-form-label">Наименование</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="discount_value"
-                        value="<?php echo $discount_value; ?>">
+                    <input type="text" class="form-control" name="job_title"
+                        value="<?php echo $job_title; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Условия для получения</label>
+                <label class="col-sm-3 col-form-label">Обязанности</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="receive_conditions"
-                        value="<?php echo $receive_conditions; ?>">
+                    <input type="text" class="form-control" name="responsibilities"
+                        value="<?php echo $responsibilities; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Суммируется ли с другими</label>
+                <label class="col-sm-3 col-form-label">Требуемый опыт</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="is_cumulative" value="<?php echo $is_cumulative; ?>">
+                    <input type="text" class="form-control" name="work_experience" value="<?php echo $work_experience; ?>">
                 </div>
             </div>
 

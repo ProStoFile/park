@@ -9,24 +9,24 @@ $database = "park";
 // Create connection
 $connection = new mysqli($servername, $username, $password, $database);
 
-$discount_id = "";
-$discount_value = "";
-$receive_conditions = "";
-$is_cumulative = "";
+$job_id = "";
+$job_title = "";
+$responsibilities = "";
+$work_experience = "";
 
 $errorMessage = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    if (!isset($_GET["discount_id"])) {
+    if (!isset($_GET["job_id"])) {
         header("location: /park/index.php");
         exit;
     }
 
-    $discount_id  = $_GET["discount_id"];
+    $job_id  = $_GET["job_id"];
 
-    $sql = "SELECT * FROM discounts WHERE discount_id=$discount_id";
+    $sql = "SELECT * FROM jobs WHERE job_id=$job_id";
     $result = $connection->query($sql);
     $row = $result->fetch_assoc();
 
@@ -35,25 +35,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         exit;
     }
 
-    $discount_value = $row["discount_value"];
-    $receive_conditions = $row["receive_conditions"];
-    $is_cumulative = $row["is_cumulative"];
+    $job_title = $row["job_title"];
+    $responsibilities = $row["responsibilities"];
+    $work_experience = $row["work_experience"];
 } else {
 
-    $discount_id = $_POST["discount_id"];
-    $discount_value = $_POST["discount_value"];
-    $receive_conditions = $_POST["receive_conditions"];
-    $is_cumulative = $_POST["is_cumulative"];
+    $job_id = $_POST["job_id"];
+    $job_title = $_POST["job_title"];
+    $responsibilities = $_POST["responsibilities"];
+    $work_experience = $_POST["work_experience"];
 
     do {
-        if (empty($discount_id) || empty($discount_value) || empty($receive_conditions) || empty($is_cumulative)) {
-            $errorMessage = "All the fields are required";
+        if (empty($job_id) || empty($job_title) || empty($responsibilities) || empty($work_experience)) {
+            $errorMessage = "Заполните все поля";
             break;
         }
 
-        $sql = "UPDATE discounts " .
-            "SET discount_value = '$discount_value', receive_conditions = '$receive_conditions', is_cumulative = '$is_cumulative'" .
-            "WHERE discount_id = $discount_id";
+        $sql = "UPDATE jobs " .
+            "SET job_title = '$job_title', responsibilities = '$responsibilities', work_experience = '$work_experience'" .
+            "WHERE job_id = $job_id";
 
         $result = $connection->query($sql);
 
@@ -99,23 +99,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         ?>
 
         <form method="post">
-            <input type="hidden" name="discount_id" value="<?php echo $discount_id; ?>">
+            <input type="hidden" name="job_id" value="<?php echo $job_id; ?>">
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Размер</label>
+                <label class="col-sm-3 col-form-label">Наименование</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="discount_value" value="<?php echo $discount_value; ?>">
+                    <input type="text" class="form-control" name="job_title" value="<?php echo $job_title; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Условия для получения</label>
+                <label class="col-sm-3 col-form-label">Обязанности</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="receive_conditions" value="<?php echo $receive_conditions; ?>">
+                    <input type="text" class="form-control" name="responsibilities" value="<?php echo $responsibilities; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Суммируется ли с другими скидками</label>
+                <label class="col-sm-3 col-form-label">Требуемый опыт</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="is_cumulative" value="<?php echo $is_cumulative; ?>">
+                    <input type="text" class="form-control" name="work_experience" value="<?php echo $work_experience; ?>">
                 </div>
             </div>
 

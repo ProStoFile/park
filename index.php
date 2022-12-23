@@ -39,7 +39,7 @@
                 if ($connection->connect_error) {
                     die("Connection failed: " . $connection->connect_error);
                 }
-                
+
                 $sql = "SELECT * FROM activities";
                 $result = $connection->query($sql);
 
@@ -97,7 +97,7 @@
                 if ($connection->connect_error) {
                     die("Connection failed: " . $connection->connect_error);
                 }
-                
+
                 $sql = "SELECT * FROM discounts";
                 $result = $connection->query($sql);
 
@@ -125,6 +125,64 @@
             </tbody>
         </table>
     </div>
+
+    <div class="container my-5">
+        <h2>Должности</h2>
+        <a class="btn btn-primary" href="/park/jobs/create.php" role="button">Добавить</a>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Наименование должности</th>
+                    <th>Обязанности сотрудника</th>
+                    <th>Требуемый опыт работы</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $database = "park";
+
+                // Create connection
+                $connection = new mysqli($servername, $username, $password, $database);
+
+                // Check connection
+                if ($connection->connect_error) {
+                    die("Connection failed: " . $connection->connect_error);
+                }
+
+                $sql = "SELECT * FROM jobs";
+                $result = $connection->query($sql);
+
+                if (!$result) {
+                    die("Invalid query: " . $connection->error);
+                }
+
+                while ($row = $result->fetch_assoc()) {
+                    echo "
+                    <tr>
+                    <td>$row[job_id]</td>
+                    <td>$row[job_title]</td>
+                    <td>$row[responsibilities]</td>
+                    <td>$row[work_experience]</td>
+                    <td>
+                        <a class='btn btn-primary btn-sm ' href='/park/jobs/edit.php?job_id=$row[job_id]'>Изменить</a>
+                        <a class='btn btn-danger btn-sm' href='/park/jobs/delete.php?job_id=$row[job_id]'>Удалить</a>
+                    </td>
+                    </tr>
+                    ";
+                }
+
+                ?>
+
+            </tbody>
+        </table>
+    </div>
+
 </body>
 
 </html>
