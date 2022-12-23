@@ -68,6 +68,63 @@
             </tbody>
         </table>
     </div>
+
+    <div class="container my-5">
+        <h2>Скидки</h2>
+        <a class="btn btn-primary" href="/park/discounts/create.php" role="button">Добавить</a>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Размер скидки (%)</th>
+                    <th>Условия для получения</th>
+                    <th>Суммируется с другими скидками</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $database = "park";
+
+                // Create connection
+                $connection = new mysqli($servername, $username, $password, $database);
+
+                // Check connection
+                if ($connection->connect_error) {
+                    die("Connection failed: " . $connection->connect_error);
+                }
+                
+                $sql = "SELECT * FROM discounts";
+                $result = $connection->query($sql);
+
+                if (!$result) {
+                    die("Invalid query: " . $connection->error);
+                }
+
+                while ($row = $result->fetch_assoc()) {
+                    echo "
+                    <tr>
+                    <td>$row[discount_id]</td>
+                    <td>$row[discount_value]</td>
+                    <td>$row[receive_conditions]</td>
+                    <td>$row[is_cumulative]</td>
+                    <td>
+                        <a class='btn btn-primary btn-sm ' href='/park/discounts/edit.php?discount_id=$row[discount_id]'>Изменить</a>
+                        <a class='btn btn-danger btn-sm' href='/park/discounts/delete.php?discount_id=$row[discount_id]'>Удалить</a>
+                    </td>
+                    </tr>
+                    ";
+                }
+
+                ?>
+
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 <?php
-if (isset($_GET["activity_id"])) {
-    $activity_id = $_GET["activity_id"];
+if (isset($_GET["discount_id"])) {
+    $discount_id = $_GET["discount_id"];
 
     $servername = "localhost";
     $username = "root";
@@ -10,7 +10,7 @@ if (isset($_GET["activity_id"])) {
     // Create connection
     $connection = new mysqli($servername, $username, $password, $database);
 
-    $sql = "DELETE FROM activities WHERE activity_id=$activity_id";
+    $sql = "DELETE FROM discounts WHERE discount_id=$discount_id";
     $connection->query($sql);
 
     header("location: /park/index.php");

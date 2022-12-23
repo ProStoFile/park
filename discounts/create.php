@@ -9,28 +9,31 @@ $database = "park";
 // Create connection
 $connection = new mysqli($servername, $username, $password, $database);
 
-$activity_title = "";
-$price = "";
-$age_restrictions = "";
-$max_count_people = "";
+$discount_value = "";
+$receive_conditions = "";
+$is_cumulative = "";
 
 $errorMessage = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $activity_title = $_POST["activity_title"];
-    $price = $_POST["price"];
-    $age_restrictions = $_POST["age_restrictions"];
-    $max_count_people = $_POST["max_count_people"];
+    $discount_value = $_POST["discount_value"];
+    $receive_conditions = $_POST["receive_conditions"];
+    $is_cumulative = $_POST["is_cumulative"];
 
     do {
-        if (empty($activity_title) || empty($price) || empty($age_restrictions) || empty($max_count_people)) {
+        if (empty($discount_value) || empty($receive_conditions) || empty($is_cumulative)) {
             $errorMessage = "Заполните все поля";
             break;
         }
 
-        $sql = "INSERT INTO activities (activity_title, price, age_restrictions, max_count_people)" .
-            "VALUES ('$activity_title', '$price', '$age_restrictions', '$max_count_people')";
+        if ($is_cumulative !== 'Да' && $is_cumulative !== 'Нет') {
+            $errorMessage = "Введите корректные данные ('Да' или 'Нет')";
+            break;
+        }
+
+        $sql = "INSERT INTO discounts (discount_value, receive_conditions, is_cumulative)" .
+            "VALUES ('$discount_value', '$receive_conditions', '$is_cumulative')";
         $result = $connection->query($sql);
 
         if (!$result) {
@@ -39,10 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
 
-        $activity_title = "";
-        $price = "";
-        $age_restrictions = "";
-        $max_count_people = "";
+        $discount_value = "";
+        $receive_conditions = "";
+        $is_cumulative = "";
 
         $successMessage = "Успешно добавлено";
 
@@ -82,27 +84,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <form method="post">
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Название</label>
+                <label class="col-sm-3 col-form-label">Размер скидки</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="activity_title" value="<?php echo $activity_title; ?>">
+                    <input type="text" class="form-control" name="discount_value"
+                        value="<?php echo $discount_value; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Стоимость</label>
+                <label class="col-sm-3 col-form-label">Условия для получения</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="price" value="<?php echo $price; ?>">
+                    <input type="text" class="form-control" name="receive_conditions"
+                        value="<?php echo $receive_conditions; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Возрастные ограничения</label>
+                <label class="col-sm-3 col-form-label">Суммируется ли с другими</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="age_restrictions" value="<?php echo $age_restrictions; ?>">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Максимальное количество человек</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="max_count_people" value="<?php echo $max_count_people; ?>">
+                    <input type="text" class="form-control" name="is_cumulative" value="<?php echo $is_cumulative; ?>">
                 </div>
             </div>
 

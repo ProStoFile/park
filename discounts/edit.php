@@ -9,25 +9,24 @@ $database = "park";
 // Create connection
 $connection = new mysqli($servername, $username, $password, $database);
 
-$activity_id = "";
-$activity_title = "";
-$price = "";
-$age_restrictions = "";
-$max_count_people = "";
+$discount_id = "";
+$discount_value = "";
+$receive_conditions = "";
+$is_cumulative = "";
 
 $errorMessage = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    if (!isset($_GET["activity_id"])) {
+    if (!isset($_GET["discount_id"])) {
         header("location: /park/index.php");
         exit;
     }
 
-    $activity_id = $_GET["activity_id"];
+    $discount_id  = $_GET["discount_id"];
 
-    $sql = "SELECT * FROM activities WHERE activity_id=$activity_id";
+    $sql = "SELECT * FROM discounts WHERE discount_id=$discount_id";
     $result = $connection->query($sql);
     $row = $result->fetch_assoc();
 
@@ -36,27 +35,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         exit;
     }
 
-    $activity_title = $row["activity_title"];
-    $price = $row["price"];
-    $age_restrictions = $row["age_restrictions"];
-    $max_count_people = $row["max_count_people"];
+    $discount_value = $row["discount_value"];
+    $receive_conditions = $row["receive_conditions"];
+    $is_cumulative = $row["is_cumulative"];
 } else {
 
-    $activity_id = $_POST["activity_id"];
-    $activity_title = $_POST["activity_title"];
-    $price = $_POST["price"];
-    $age_restrictions = $_POST["age_restrictions"];
-    $max_count_people = $_POST["max_count_people"];
+    $discount_id = $_POST["discount_id"];
+    $discount_value = $_POST["discount_value"];
+    $receive_conditions = $_POST["receive_conditions"];
+    $is_cumulative = $_POST["is_cumulative"];
 
     do {
-        if (empty($activity_id) || empty($activity_title) || empty($price) || empty($age_restrictions) || empty($max_count_people)) {
+        if (empty($discount_id) || empty($discount_value) || empty($receive_conditions) || empty($is_cumulative)) {
             $errorMessage = "All the fields are required";
             break;
         }
 
-        $sql = "UPDATE activities " .
-            "SET activity_title = '$activity_title', price = '$price', age_restrictions = '$age_restrictions', max_count_people = '$max_count_people' " .
-            "WHERE activity_id = $activity_id";
+        $sql = "UPDATE discounts " .
+            "SET discount_value = '$discount_value', receive_conditions = '$receive_conditions', is_cumulative = '$is_cumulative'" .
+            "WHERE discount_id = $discount_id";
 
         $result = $connection->query($sql);
 
@@ -102,29 +99,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         ?>
 
         <form method="post">
-            <input type="hidden" name="activity_id" value="<?php echo $activity_id; ?>">
+            <input type="hidden" name="discount_id" value="<?php echo $discount_id; ?>">
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Название</label>
+                <label class="col-sm-3 col-form-label">Размер</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="activity_title" value="<?php echo $activity_title; ?>">
+                    <input type="text" class="form-control" name="discount_value" value="<?php echo $discount_value; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Стоимость</label>
+                <label class="col-sm-3 col-form-label">Условия для получения</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="price" value="<?php echo $price; ?>">
+                    <input type="text" class="form-control" name="receive_conditions" value="<?php echo $receive_conditions; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Возрастные ограничения</label>
+                <label class="col-sm-3 col-form-label">Суммируется ли с другими скидками</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="age_restrictions" value="<?php echo $age_restrictions; ?>">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Максимальное количество человек</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="max_count_people" value="<?php echo $max_count_people; ?>">
+                    <input type="text" class="form-control" name="is_cumulative" value="<?php echo $is_cumulative; ?>">
                 </div>
             </div>
 
