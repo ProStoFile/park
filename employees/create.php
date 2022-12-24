@@ -11,10 +11,9 @@ $connection = new mysqli($servername, $username, $password, $database);
 
 $fullname = "";
 $age = "";
-$is_regular_customer = "";
-$favorite_activity = "";
-$available_discount = "";
-$is_banned = "";
+$position = "";
+$phone = "";
+$email = "";
 
 $errorMessage = "";
 $successMessage = "";
@@ -22,34 +21,29 @@ $successMessage = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $fullname = $_POST["fullname"];
     $age = $_POST["age"];
-    $is_regular_customer = $_POST["is_regular_customer"];
-    $favorite_activity = $_POST["favorite_activity"];
-    $available_discount = $_POST["available_discount"];
-    $is_banned = $_POST["is_banned"];
+    $position = $_POST["position"];
+    $phone = $_POST["phone"];
+    $email = $_POST["email"];
 
     do {
         if (
             empty($fullname) ||
             empty($age) ||
-            empty($is_regular_customer) ||
-            empty($favorite_activity) ||
-            empty($available_discount) ||
-            empty($is_banned)
+            empty($position) ||
+            empty($phone) ||
+            empty($email)
         ) {
             $errorMessage = "Заполните все поля";
             break;
         }
 
-        if ($is_regular_customer !== 'Да' && $is_regular_customer !== 'Нет') {
-            $errorMessage = "Введите корректные данные ('Да' или 'Нет')";
+        if (!(preg_match("/^(?:[a-z0-9]+(?:[-_.]?[a-z0-9]+)?@[a-z0-9_.-]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i", $email))) {
+            $errorMessage = "Некорректный email";
+            break;
         }
 
-        if ($is_banned !== 'Да' && $is_banned !== 'Нет') {
-            $errorMessage = "Введите корректные данные ('Да' или 'Нет')";
-        }
-
-        $sql = "INSERT INTO clients (fullname, age, is_regular_customer, favorite_activity, available_discount, is_banned)" .
-            "VALUES ('$fullname', '$age', '$is_regular_customer', '$favorite_activity', '$available_discount', '$is_banned')";
+        $sql = "INSERT INTO employees (fullname, age, position, phone, email)" .
+            "VALUES ('$fullname', '$age', '$position', '$phone', '$email')";
         $result = $connection->query($sql);
 
         if (!$result) {
@@ -60,10 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $fullname = "";
         $age = "";
-        $is_regular_customer = "";
-        $favorite_activity = "";
-        $available_discount = "";
-        $is_banned = "";
+        $position = "";
+        $phone = "";
+        $email = "";
 
         $successMessage = "Успешно добавлено";
 
@@ -115,29 +108,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Наличие статуса постоянного клиента</label>
+                <label class="col-sm-3 col-form-label">Должность</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="is_regular_customer"
-                        value="<?php echo $is_regular_customer; ?>">
+                    <input type="text" class="form-control" name="position" value="<?php echo $position; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Любимое мероприятие</label>
+                <label class="col-sm-3 col-form-label">Телефон</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="favorite_activity"
-                        value="<?php echo $favorite_activity; ?>">
+                    <input type="text" class="form-control" name="phone" value="<?php echo $phone; ?>">
                 </div>
-            </div><div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Доступные скидки</label>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="available_discount"
-                        value="<?php echo $available_discount; ?>">
-                </div>
-            </div><div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Наличие запрета на посещение парка</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="is_banned"
-                        value="<?php echo $is_banned; ?>">
+                    <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
                 </div>
             </div>
 

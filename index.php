@@ -247,8 +247,8 @@
     </div>
 
     <div class="container my-5">
-        <h2>Посетители</h2>
-        <a class="btn btn-primary" href="/park/clients/create.php" role="button">Добавить</a>
+        <h2>Сотрудники</h2>
+        <a class="btn btn-primary" href="/park/employees/create.php" role="button">Добавить</a>
         <br>
         <table class="table">
             <thead>
@@ -256,10 +256,9 @@
                     <th>ID</th>
                     <th>ФИО</th>
                     <th>Возраст</th>
-                    <th>Наличие статуса постоянного клиента</th>
-                    <th>Доступные скидки</th>
-                    <th>Любимое мероприятие</th>
-                    <th>Наличие запрета</th>
+                    <th>Должность</th>
+                    <th>Номер телефона</th>
+                    <th>Email</th>
                     <th>Действия</th>
                 </tr>
             </thead>
@@ -278,7 +277,7 @@
                     die("Connection failed: " . $connection->connect_error);
                 }
 
-                $sql = "SELECT * FROM clients";
+                $sql = "SELECT * FROM employees";
                 $result = $connection->query($sql);
 
                 if (!$result) {
@@ -288,16 +287,15 @@
                 while ($row = $result->fetch_assoc()) {
                     echo "
                     <tr>
-                    <td>$row[client_id]</td>
+                    <td>$row[employee_id]</td>
                     <td>$row[fullname]</td>
                     <td>$row[age]</td>
-                    <td>$row[is_regular_customer]</td>
-                    <td>$row[available_discount]</td>
-                    <td>$row[favorite_activity]</td>     
-                    <td>$row[is_banned]</td>
+                    <td>$row[position]</td>
+                    <td>$row[phone]</td>
+                    <td>$row[email]</td>     
                     <td>
-                        <a class='btn btn-primary btn-sm ' href='/park/clients/edit.php?client_id=$row[client_id]'>Изменить</a>
-                        <a class='btn btn-danger btn-sm' href='/park/clients/delete.php?client_id=$row[client_id]'>Удалить</a>
+                        <a class='btn btn-primary btn-sm ' href='/park/employees/edit.php?employee_id=$row[employee_id]'>Изменить</a>
+                        <a class='btn btn-danger btn-sm' href='/park/employees/delete.php?employee_id=$row[employee_id]'>Удалить</a>
                     </td>
                     </tr>
                     ";

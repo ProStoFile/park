@@ -9,10 +9,10 @@ $database = "park";
 // Create connection
 $connection = new mysqli($servername, $username, $password, $database);
 
-$client_id = "";
+$employee_id = "";
 $fullname = "";
 $age = "";
-$is_regular_customer = "";
+$position = "";
 $favorite_activity = "";
 $available_discount = "";
 $is_banned = "";
@@ -22,14 +22,14 @@ $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    if (!isset($_GET["client_id"])) {
+    if (!isset($_GET["employee_id"])) {
         header("location: /park/index.php");
         exit;
     }
 
-    $client_id = $_GET["client_id"];
+    $employee_id = $_GET["employee_id"];
 
-    $sql = "SELECT * FROM clients WHERE client_id=$client_id";
+    $sql = "SELECT * FROM employees WHERE employee_id=$employee_id";
     $result = $connection->query($sql);
     $row = $result->fetch_assoc();
 
@@ -38,55 +38,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         exit;
     }
 
-    $client_id = $row["client_id"];
+    $employee_id = $row["employee_id"];
     $fullname = $row["fullname"];
     $age = $row["age"];
-    $is_regular_customer = $row["is_regular_customer"];
-    $favorite_activity = $row["favorite_activity"];
-    $available_discount = $row["available_discount"];
-    $is_banned = $row["is_banned"];
+    $position = $row["position"];
+    $phone = $row["phone"];
+    $email = $row["email"];
 } else {
 
-    $client_id = $_POST["client_id"];
+    $employee_id = $_POST["employee_id"];
     $fullname = $_POST["fullname"];
     $age = $_POST["age"];
-    $is_regular_customer = $_POST["is_regular_customer"];
-    $favorite_activity = $_POST["favorite_activity"];
-    $available_discount = $_POST["available_discount"];
-    $is_banned = $_POST["is_banned"];
+    $position = $_POST["position"];
+    $phone = $_POST["phone"];
+    $email = $_POST["email"];
 
     do {
         if (
-            empty($client_id) ||
+            empty($employee_id) ||
             empty($fullname) ||
             empty($age) ||
-            empty($is_regular_customer) ||
-            empty($favorite_activity) ||
-            empty($available_discount) ||
-            empty($is_banned)
+            empty($position) ||
+            empty($phone) ||
+            empty($email)
         ) {
             $errorMessage = "Заполните все поля";
             break;
         }
 
-        if ($is_regular_customer !== 'Да' && $is_regular_customer !== 'Нет') {
-            $errorMessage = "Введите корректное значение ('Да' или 'Нет')";
+        if (!(preg_match("/^(?:[a-z0-9]+(?:[-_.]?[a-z0-9]+)?@[a-z0-9_.-]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i", $email))) {
+            $errorMessage = "Некорректный email";
             break;
         }
 
-        if ($is_banned !== 'Да' && $is_banned !== 'Нет') {
-            $errorMessage = "Введите корректное значение ('Да' или 'Нет')";
-            break;
-        }
-
-        $sql = "UPDATE clients " .
+        $sql = "UPDATE employees " .
             "SET fullname = '$fullname', 
             age = '$age', 
-            is_regular_customer = '$is_regular_customer', 
-            favorite_activity = '$favorite_activity',
-            available_discount = '$available_discount', 
-            is_banned = '$is_banned'" .
-            "WHERE client_id = $client_id";
+            position = '$position', 
+            phone = '$phone',
+            email = '$email'" .
+            "WHERE employee_id = $employee_id";
 
         $result = $connection->query($sql);
 
@@ -132,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         ?>
 
         <form method="post">
-            <input type="hidden" name="client_id" value="<?php echo $client_id; ?>">
+            <input type="hidden" name="employee_id" value="<?php echo $employee_id; ?>">
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">ФИО</label>
                 <div class="col-sm-6">
@@ -146,29 +137,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Наличие статуса постоянного клиента</label>
+                <label class="col-sm-3 col-form-label">Должность</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="is_regular_customer"
-                        value="<?php echo $is_regular_customer; ?>">
+                    <input type="text" class="form-control" name="position" value="<?php echo $position; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Доступные скидки</label>
+                <label class="col-sm-3 col-form-label">Телефон</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="available_discount" value="<?php echo $available_discount; ?>">
+                    <input type="text" class="form-control" name="phone" value="<?php echo $phone; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Любимое мероприятие</label>
+                <label class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="favorite_activity" value="<?php echo $favorite_activity; ?>">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Наличие запрета</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="is_banned"
-                        value="<?php echo $is_banned; ?>">
+                    <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
                 </div>
             </div>
 
