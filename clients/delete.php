@@ -10,7 +10,7 @@ if (isset($_GET["client_id"])) {
     // Create connection
     $connection = new mysqli($servername, $username, $password, $database);
 
-    $sql = "DELETE FROM clients WHERE client_id=$client_id";
+    $sql = "DELETE FROM clients WHERE client_id=$client_id;";
     $connection->query($sql);
 
     header("location: /park/index.php");

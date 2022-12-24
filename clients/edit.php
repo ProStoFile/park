@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             is_regular_customer = '$is_regular_customer', 
             favorite_activity = '$favorite_activity',
             available_discount = '$available_discount', 
-            is_banned = '$is_banned', " .
+            is_banned = '$is_banned'" .
             "WHERE client_id = $client_id";
 
         $result = $connection->query($sql);

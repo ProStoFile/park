@@ -229,8 +229,8 @@
                     <td>$row[fullname]</td>
                     <td>$row[age]</td>
                     <td>$row[is_regular_customer]</td>
-                    <td>$row[favorite_activity]</td>
                     <td>$row[available_discount]</td>
+                    <td>$row[favorite_activity]</td>     
                     <td>$row[is_banned]</td>
                     <td>
                         <a class='btn btn-primary btn-sm ' href='/park/clients/edit.php?client_id=$row[client_id]'>Изменить</a>
