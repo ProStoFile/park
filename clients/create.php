@@ -9,26 +9,47 @@ $database = "park";
 // Create connection
 $connection = new mysqli($servername, $username, $password, $database);
 
-$job_title = "";
-$responsibilities = "";
-$work_experience = "";
+$fullname = "";
+$age = "";
+$is_regular_customer = "";
+$favorite_activity = "";
+$available_discount = "";
+$is_banned = "";
 
 $errorMessage = "";
 $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $job_title = $_POST["job_title"];
-    $responsibilities = $_POST["responsibilities"];
-    $work_experience = $_POST["work_experience"];
+    $fullname = $_POST["fullname"];
+    $age = $_POST["age"];
+    $is_regular_customer = $_POST["is_regular_customer"];
+    $favorite_activity = $_POST["favorite_activity"];
+    $available_discount = $_POST["available_discount"];
+    $is_banned = $_POST["is_banned"];
 
     do {
-        if (empty($job_title) || empty($responsibilities) || empty($work_experience)) {
+        if (
+            empty($fullname) ||
+            empty($age) ||
+            empty($is_regular_customer) ||
+            empty($favorite_activity) ||
+            empty($available_discount) ||
+            empty($is_banned)
+        ) {
             $errorMessage = "Заполните все поля";
             break;
         }
 
-        $sql = "INSERT INTO jobs (job_title, responsibilities, work_experience)" .
-            "VALUES ('$job_title', '$responsibilities', '$work_experience')";
+        if ($is_regular_customer !== 'Да' && $is_regular_customer !== 'Нет') {
+            $errorMessage = "Введите корректные данные ('Да' или 'Нет')";
+        }
+
+        if ($is_banned !== 'Да' && $is_banned !== 'Нет') {
+            $errorMessage = "Введите корректные данные ('Да' или 'Нет')";
+        }
+
+        $sql = "INSERT INTO clients (fullname, age, is_regular_customer, favorite_activity, available_discount, is_banned)" .
+            "VALUES ('$fullname', '$age', '$is_regular_customer', '$favorite_activity', '$available_discount', '$is_banned')";
         $result = $connection->query($sql);
 
         if (!$result) {
@@ -37,9 +58,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
 
-        $job_title = "";
-        $responsibilities = "";
-        $work_experience = "";
+        $fullname = "";
+        $age = "";
+        $is_regular_customer = "";
+        $favorite_activity = "";
+        $available_discount = "";
+        $is_banned = "";
 
         $successMessage = "Успешно добавлено";
 
@@ -79,23 +103,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <form method="post">
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Наименование</label>
+                <label class="col-sm-3 col-form-label">ФИО</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="job_title"
-                        value="<?php echo $job_title; ?>">
+                    <input type="text" class="form-control" name="fullname" value="<?php echo $fullname; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Обязанности</label>
+                <label class="col-sm-3 col-form-label">Возраст</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="responsibilities"
-                        value="<?php echo $responsibilities; ?>">
+                    <input type="text" class="form-control" name="age" value="<?php echo $age; ?>">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Требуемый опыт</label>
+                <label class="col-sm-3 col-form-label">Наличие статуса постоянного клиента</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="work_experience" value="<?php echo $work_experience; ?>">
+                    <input type="text" class="form-control" name="is_regular_customer"
+                        value="<?php echo $is_regular_customer; ?>">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Любимое мероприятие</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="favorite_activity"
+                        value="<?php echo $favorite_activity; ?>">
+                </div>
+            </div><div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Доступные скидки</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="available_discount"
+                        value="<?php echo $available_discount; ?>">
+                </div>
+            </div><div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Наличие запрета на посещение парка</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="is_banned"
+                        value="<?php echo $is_banned; ?>">
                 </div>
             </div>
 

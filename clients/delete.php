@@ -1,6 +1,6 @@
 <?php
-if (isset($_GET["job_id"])) {
-    $job_id = $_GET["job_id"];
+if (isset($_GET["client_id"])) {
+    $client_id = $_GET["client_id"];
 
     $servername = "localhost";
     $username = "root";
@@ -10,7 +10,7 @@ if (isset($_GET["job_id"])) {
     // Create connection
     $connection = new mysqli($servername, $username, $password, $database);
 
-    $sql = "DELETE FROM jobs WHERE job_id=$job_id";
+    $sql = "DELETE FROM clients WHERE client_id=$client_id";
     $connection->query($sql);
 
     header("location: /park/index.php");
