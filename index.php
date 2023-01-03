@@ -20,8 +20,6 @@
         </form>
     </div>
 
-
-
     <div class="container my-5">
         <h2>Мероприятия</h2>
         <a class="btn btn-primary" href="/park/activities/create.php" role="button">Добавить</a>

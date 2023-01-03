@@ -24,7 +24,11 @@ if (mb_strlen($login) < 5 || mb_strlen($login) > 90) {
 }
 
 $mysql = new mysqli('localhost', 'root', '', 'park');
-$mysql->query('INSERT INTO `users` (user_id, login, pass, name)
-VALUES($login, $pass, $name)');
+$mysql->query("INSERT INTO `users` (`login`, `name`, `pass`)
+VALUES('$login', '$name', '$pass')");
+
 $mysql->close();
+
+header("location: /park/index.php");
+
 ?>
