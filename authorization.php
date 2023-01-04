@@ -1,4 +1,5 @@
 <?php
+session_start();
 $login = filter_var(
     trim($_POST['login']),
 FILTER_SANITIZE_STRING
@@ -28,7 +29,7 @@ if (count($user) == 0) {
     exit();
 }
 
-setcookie('user', $user['name'], time() + 3600, "/");
+setcookie('user', $user['name'], time() + 120, "/");
 
 $mysql->close();
 
