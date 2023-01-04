@@ -364,7 +364,6 @@
 
             <div class="container my-5">
                 <h2 style="color: black">Мероприятия</h2>
-                <a class="btn btn-primary" href="/park/activities/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
                     <thead>
@@ -418,7 +417,6 @@
 
             <div class="container my-5">
                 <h2 style="color: black">Скидки</h2>
-                <a class="btn btn-primary" href="/park/discounts/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
                     <thead>
@@ -469,58 +467,6 @@
             </div>
 
             <div class="container my-5">
-                <h2 style="color: black">Должности</h2>
-                <a class="btn btn-primary" href="/park/jobs/create.php" role="button">Добавить</a>
-                <br>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Наименование должности</th>
-                            <th>Обязанности сотрудника</th>
-                            <th>Требуемый опыт работы</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $servername = "localhost";
-                        $username = "root";
-                        $password = "";
-                        $database = "park";
-
-                        // Create connection
-                        $connection = new mysqli($servername, $username, $password, $database);
-
-                        // Check connection
-                        if ($connection->connect_error) {
-                            die("Connection failed: " . $connection->connect_error);
-                        }
-
-                        $sql = "SELECT * FROM jobs";
-                        $result = $connection->query($sql);
-
-                        if (!$result) {
-                            die("Invalid query: " . $connection->error);
-                        }
-
-                        while ($row = $result->fetch_assoc()) {
-                            echo "
-                    <tr>
-                    <td>$row[job_id]</td>
-                    <td>$row[job_title]</td>
-                    <td>$row[responsibilities]</td>
-                    <td>$row[work_experience]</td>
-                    </tr>
-                    ";
-                        }
-
-                        ?>
-
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="container my-5">
                 <h2 style="color: black">Посетители</h2>
                 <a class="btn btn-primary" href="/park/clients/create.php" role="button">Добавить</a>
                 <br>
@@ -534,6 +480,7 @@
                             <th>Доступные скидки</th>
                             <th>Любимое мероприятие</th>
                             <th>Наличие запрета</th>
+                            <th>Действия</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -568,62 +515,10 @@
                     <td>$row[available_discount]</td>
                     <td>$row[favorite_activity]</td>     
                     <td>$row[is_banned]</td>
-                    </tr>
-                    ";
-                        }
-
-                        ?>
-
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="container my-5">
-                <h2 style="color: black">Сотрудники</h2>
-                <a class="btn btn-primary" href="/park/employees/create.php" role="button">Добавить</a>
-                <br>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>ФИО</th>
-                            <th>Возраст</th>
-                            <th>Должность</th>
-                            <th>Номер телефона</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $servername = "localhost";
-                        $username = "root";
-                        $password = "";
-                        $database = "park";
-
-                        // Create connection
-                        $connection = new mysqli($servername, $username, $password, $database);
-
-                        // Check connection
-                        if ($connection->connect_error) {
-                            die("Connection failed: " . $connection->connect_error);
-                        }
-
-                        $sql = "SELECT * FROM employees";
-                        $result = $connection->query($sql);
-
-                        if (!$result) {
-                            die("Invalid query: " . $connection->error);
-                        }
-
-                        while ($row = $result->fetch_assoc()) {
-                            echo "
-                    <tr>
-                    <td>$row[employee_id]</td>
-                    <td>$row[fullname]</td>
-                    <td>$row[age]</td>
-                    <td>$row[position]</td>
-                    <td>$row[phone]</td>
-                    <td>$row[email]</td>     
+                    <td>
+                        <a class='btn btn-primary btn-sm ' href='/park/clients/edit.php?client_id=$row[client_id]'>Изменить</a>
+                        <a class='btn btn-danger btn-sm' href='/park/clients/delete.php?client_id=$row[client_id]'>Удалить</a>
+                    </td>
                     </tr>
                     ";
                         }
