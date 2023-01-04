@@ -9,7 +9,7 @@ $database = "park";
 // Create connection
 $connection = new mysqli($servername, $username, $password, $database);
 
-$job_id = "";
+$id = "";
 $job_title = "";
 $responsibilities = "";
 $work_experience = "";
@@ -19,14 +19,14 @@ $successMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-    if (!isset($_GET["job_id"])) {
+    if (!isset($_GET["id"])) {
         header("location: /park/index.php");
         exit;
     }
 
-    $job_id  = $_GET["job_id"];
+    $id  = $_GET["id"];
 
-    $sql = "SELECT * FROM jobs WHERE job_id=$job_id";
+    $sql = "SELECT * FROM jobs WHERE id=$id";
     $result = $connection->query($sql);
     $row = $result->fetch_assoc();
 
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $work_experience = $row["work_experience"];
 } else {
 
-    $job_id = $_POST["job_id"];
+    $id = $_POST["id"];
     $job_title = $_POST["job_title"];
     $responsibilities = $_POST["responsibilities"];
     $work_experience = $_POST["work_experience"];
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         $sql = "UPDATE jobs " .
             "SET job_title = '$job_title', responsibilities = '$responsibilities', work_experience = '$work_experience'" .
-            "WHERE job_id = $job_id";
+            "WHERE id = $id";
 
         $result = $connection->query($sql);
 
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         ?>
 
         <form method="post">
-            <input type="hidden" name="job_id" value="<?php echo $job_id; ?>">
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Наименование</label>
                 <div class="col-sm-6">

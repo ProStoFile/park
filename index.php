@@ -13,8 +13,7 @@
 
 <body>
 
-
-    <div class="background">
+    <div style="color: white">
 
         <!-- Form -->
 
@@ -22,8 +21,8 @@
         if ($_COOKIE['user'] == ''): ?>
             <div class="container my-5">
                 <div class="row">
-                    <div class="col">
-                        <h1>Форма регистрации</h1>
+                    <div class="col text-center">
+                        <h1 style="color: black">Форма регистрации</h1>
                         <form action="check.php" method="post">
                             <input type="text" class="form-control" name="login" id="login" placeholder="Введите логин"><br>
                             <input type="text" class="form-control" name="name" id="name" placeholder="Введите имя"><br>
@@ -32,8 +31,8 @@
                             <button class="btn btn-success" type="submit">Зарегистрироваться</button>
                         </form>
                     </div>
-                    <div class="col">
-                        <h1>Форма авторизации</h1>
+                    <div class="col text-center">
+                        <h1 style="color: black">Форма авторизации</h1>
                         <form action="authorization.php" method="post">
                             <input type="text" class="form-control" name="login" id="login" placeholder="Введите логин"><br>
                             <input type="password" class="form-control" name="pass" id="pass"
@@ -51,11 +50,12 @@
         <?php if ($_COOKIE['user'] == 'admin'): ?>
 
             <div class="container my-5">
-                <p>Привет <?= $_COOKIE['user'] ?>. <a href="/park/exit.php">Username</a> </p>
+                <p style="color: black">Вы вошли в профиль <?= $_COOKIE['user'] ?>. <a href="/park/exit.php">
+                        Выйти из профиля</a> </p>
             </div>
 
             <div class="container my-5">
-                <h2>Мероприятия</h2>
+                <h2 style="color: black">Мероприятия</h2>
                 <a class="btn btn-primary" href="/park/activities/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
@@ -114,7 +114,7 @@
             </div>
 
             <div class="container my-5">
-                <h2>Скидки</h2>
+                <h2 style="color: black">Скидки</h2>
                 <a class="btn btn-primary" href="/park/discounts/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
@@ -171,7 +171,7 @@
             </div>
 
             <div class="container my-5">
-                <h2>Должности</h2>
+                <h2 style="color: black">Должности</h2>
                 <a class="btn btn-primary" href="/park/jobs/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
@@ -228,7 +228,7 @@
             </div>
 
             <div class="container my-5">
-                <h2>Посетители</h2>
+                <h2 style="color: black">Посетители</h2>
                 <a class="btn btn-primary" href="/park/clients/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
@@ -291,7 +291,7 @@
             </div>
 
             <div class="container my-5">
-                <h2>Сотрудники</h2>
+                <h2 style="color: black">Сотрудники</h2>
                 <a class="btn btn-primary" href="/park/employees/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
@@ -357,12 +357,13 @@
         <?php if ($_COOKIE['user'] == 'username'): ?>
 
             <div class="container my-5">
-                <p>Привет <?= $_COOKIE['user'] ?>. <a href="/park/exit.php">Username</a> </p>
+                <p style="color: black">Вы вошли в профиль <?= $_COOKIE['user'] ?>. <a href="/park/exit.php">
+                        Выйти из профиля</a> </p>
             </div>
 
 
             <div class="container my-5">
-                <h2>Мероприятия</h2>
+                <h2 style="color: black">Мероприятия</h2>
                 <a class="btn btn-primary" href="/park/activities/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
@@ -416,7 +417,7 @@
             </div>
 
             <div class="container my-5">
-                <h2>Скидки</h2>
+                <h2 style="color: black">Скидки</h2>
                 <a class="btn btn-primary" href="/park/discounts/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
@@ -468,7 +469,7 @@
             </div>
 
             <div class="container my-5">
-                <h2>Должности</h2>
+                <h2 style="color: black">Должности</h2>
                 <a class="btn btn-primary" href="/park/jobs/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
@@ -520,7 +521,7 @@
             </div>
 
             <div class="container my-5">
-                <h2>Посетители</h2>
+                <h2 style="color: black">Посетители</h2>
                 <a class="btn btn-primary" href="/park/clients/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">
@@ -578,7 +579,7 @@
             </div>
 
             <div class="container my-5">
-                <h2>Сотрудники</h2>
+                <h2 style="color: black">Сотрудники</h2>
                 <a class="btn btn-primary" href="/park/employees/create.php" role="button">Добавить</a>
                 <br>
                 <table class="table">

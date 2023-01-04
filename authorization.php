@@ -29,7 +29,7 @@ if (count($user) == 0) {
     exit();
 }
 
-setcookie('user', $user['name'], time() + 120, "/");
+setcookie('user', $user['name'], time() + 3600, "/");
 
 $mysql->close();
 
